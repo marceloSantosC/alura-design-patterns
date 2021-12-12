@@ -12,6 +12,6 @@ public class CalculoDescontoService {
         Desconto semDesconto = new SemDesconto();
         Desconto descontoPorQuantidade = new DescontoBaseadoEmQuantidadeMinimaItens(semDesconto);
         Desconto descontoPorValorCompra = new DescontoBaseadoEmPrecoMinimoCompra(descontoPorQuantidade);
-        return descontoPorValorCompra.calcular(orcamento);
+        return descontoPorValorCompra.calcularDesconto(orcamento);
     }
 }

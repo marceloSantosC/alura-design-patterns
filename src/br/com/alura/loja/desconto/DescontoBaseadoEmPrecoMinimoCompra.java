@@ -13,10 +13,14 @@ public class DescontoBaseadoEmPrecoMinimoCompra extends Desconto {
         super(proximoDescontoASerAplicado);
     }
 
-    public BigDecimal calcular(Orcamento orcamento) {
-        if (orcamento.getValor().compareTo(VALOR_MINIMO_EM_COMPRAS_PARA_DESCONTO) > 0) {
-            return orcamento.getValor().multiply(PERCENTUAL_DESCONTO);
-        }
-        return proximoDescontoASerAplicado.calcular(orcamento);
+    @Override
+    public BigDecimal efetuarCalculo(Orcamento orcamento) {
+        return orcamento.getValor().multiply(PERCENTUAL_DESCONTO);
     }
+
+    @Override
+    protected boolean deveCalcularDesconto(Orcamento orcamento) {
+        return orcamento.getValor().compareTo(VALOR_MINIMO_EM_COMPRAS_PARA_DESCONTO) > 0;
+    }
+
 }

@@ -13,10 +13,13 @@ public class DescontoBaseadoEmQuantidadeMinimaItens extends Desconto {
         super(proximoDescontoASerAplicado);
     }
 
-    public BigDecimal calcular(Orcamento orcamento) {
-        if (orcamento.getQuantidadeItens() > QUANTIDADE_ITENS_MINIMA_PARA_DESCONTO) {
-            return orcamento.getValor().multiply(PERCENTUAL_DESCONTO);
-        }
-        return proximoDescontoASerAplicado.calcular(orcamento);
+    @Override
+    public BigDecimal efetuarCalculo(Orcamento orcamento) {
+        return orcamento.getValor().multiply(PERCENTUAL_DESCONTO);
+    }
+
+    @Override
+    protected boolean deveCalcularDesconto(Orcamento orcamento) {
+        return orcamento.getQuantidadeItens() > QUANTIDADE_ITENS_MINIMA_PARA_DESCONTO;
     }
 }
