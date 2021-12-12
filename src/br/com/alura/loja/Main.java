@@ -2,23 +2,27 @@ package br.com.alura.loja;
 
 import br.com.alura.loja.desconto.*;
 import br.com.alura.loja.orcamento.Orcamento;
+import br.com.alura.loja.pedido.DadosGeracaoPedido;
+import br.com.alura.loja.pedido.GeracaoPedidoHandler;
+import br.com.alura.loja.pedido.acao.AcaoAposGerarPedido;
+import br.com.alura.loja.pedido.acao.EnviarEmailPedido;
+import br.com.alura.loja.pedido.acao.SalvarPedido;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
 
-        Orcamento orcamento1 = new Orcamento(new BigDecimal("100.00"), 10);
-        Orcamento orcamento2 = new Orcamento(new BigDecimal("1000.00"), 2);
-        Orcamento orcamento3 = new Orcamento(new BigDecimal("100.00"), 1);
-        Orcamento orcamento4 = new Orcamento(new BigDecimal("1000.00"), 15);
-
-        CalculoDescontoService calculoDescontoService = new CalculoDescontoService();
+        String cliente = args[0];
+        BigDecimal valorOrcamento = new BigDecimal(args[1]);
+        int quantidadeItens = Integer.parseInt(args[2]);
 
 
-        System.out.println(calculoDescontoService.calcular(orcamento1));
-        System.out.println(calculoDescontoService.calcular(orcamento2));
-        System.out.println(calculoDescontoService.calcular(orcamento3));
-        System.out.println(calculoDescontoService.calcular(orcamento4));
+        DadosGeracaoPedido dadosGeracaoPedido = new DadosGeracaoPedido(cliente, valorOrcamento, quantidadeItens);
+        AcaoAposGerarPedido enviarEmail = new EnviarEmailPedido();
+        AcaoAposGerarPedido salvarPedido = new SalvarPedido();
+        GeracaoPedidoHandler geracaoPedidoHandler = new GeracaoPedidoHandler(Arrays.asList(enviarEmail, salvarPedido));
+        geracaoPedidoHandler.gerarPedidoDepoisExecutarAcoes(dadosGeracaoPedido);
     }
 }
