@@ -2,21 +2,21 @@ package br.com.alura.loja;
 
 import br.com.alura.loja.orcamento.ItemOrcamento;
 import br.com.alura.loja.orcamento.Orcamento;
+import br.com.alura.loja.orcamento.OrcamentoProxy;
 
 import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
 
-        Orcamento orcamentoAntigo = new Orcamento();
-        orcamentoAntigo.adicionarItem(new ItemOrcamento(new BigDecimal("100")));
-        orcamentoAntigo.reprovar();
-
         Orcamento orcamento = new Orcamento();
-        orcamento.adicionarItem(new ItemOrcamento(BigDecimal.TEN));
-        orcamento.adicionarItem(orcamentoAntigo);
+        orcamento.adicionarItem(new ItemOrcamento(new BigDecimal("100")));
 
-        System.out.println(orcamento.getValor());
+
+        Orcamento orcamentoProxy = new OrcamentoProxy(orcamento);
+
+        System.out.println(orcamentoProxy.getValor()); // Demora os 2s
+        System.out.println(orcamentoProxy.getValor()); // Pega do proxy
 
 
     }
